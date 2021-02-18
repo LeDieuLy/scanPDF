@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <style>
+        table{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<form method="post" th:action="@{/readPdf}" enctype="multipart/form-data">
+
+    <div style="margin-left: 400px;margin-top: 50px">
+        <input type="file" name="file" required>
+        <br>
+        <br>
+        <button type="submit" class="registerbtn">Scan File</button>
+    </div>
+    <div th:switch="${type}">
+        <div th:case="'docCreaditChangeForm'">
+            <table  th:style="${viewTB}" class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">LCNo</th>
+                    <th scope="col">IssueDate</th>
+                    <th scope="col">LCAmount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r :  ${response}">
+                    <th scope="col">1</th>
+                    <td><p th:text="${r.lcNo}"/></td>
+                    <td><p th:text="${r.issueDate}"/></td>
+                    <td><p th:text="${r.lcAmount}"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:case="'docCreApliF'">
+            <table th:style="${viewTB}" class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Commodity</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Uni Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r :  ${response}">
+                <th scope="col">1</th>
+                <td><p th:text="${r.commodity}"/></td>
+                <td><p th:text="${r.quantity}"/></td>
+                <td><p th:text="${r.uniprice}"/></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div th:case="'remitApliResultF'">
+            <table th:style="${viewTB}" class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Money Transfer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r :  ${response}">
+                    <th scope="col">1</th>
+                    <td><p th:text="${r.moneyTransfer}"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:case="'default'">
+            <h4 style="margin-left: 400px;margin-top: 50px"> The form has not been defined!!! </h4>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>
